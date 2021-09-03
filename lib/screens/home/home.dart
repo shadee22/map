@@ -1,4 +1,5 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_unnecessary_containers, prefer_const_constructors, deprecated_member_use, prefer_const_literals_to_create_immutables, unused_import
+// ignore_for_file: use_key_in_widget_constructors, avoid_unnecessary_containers, prefer_const_constructors, deprecated_member_use, prefer_const_literals_to_create_immutables, unused_import, prefer_final_fields
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +11,11 @@ import 'package:meowing/screens/home/brew_list.dart';
 import 'package:meowing/models/brew.dart';
 import 'package:meowing/models/name.dart';
 import 'package:meowing/models/user.dart';
-// import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:meowing/screens/home/messager.dart';
+import 'package:meowing/screens/home/owner.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:titled_navigation_bar/titled_navigation_bar.dart';
 import 'package:meowing/shared/constraints.dart';
-import 'package:meowing/ads/game_route.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   int _currentColor = 0;
 
-  final List<Widget> _children = [BrewList(), Gamer(), Third(), Fourth()];
+  final List<Widget> _children = [BrewList(), Third(), Owner(), Fourth()];
   final List<Color> _colors = [firstbackcolor];
   void onTabTapped(int index) {
     setState(() {
@@ -35,11 +35,6 @@ class _HomeState extends State<Home> {
     });
   }
 
-  void colorChanger(int index) {
-    setState(() {
-      int _currentColor = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +115,7 @@ class _HomeState extends State<Home> {
                 _currentIndex, // Use this to update the Bar giving a position
             onTap: (value) {
               onTabTapped(value);
-              colorChanger(value);
+
             },
             items: [
               TitledNavigationBarItem(
@@ -137,44 +132,7 @@ class _HomeState extends State<Home> {
                   icon: Icon(Icons.military_tech)),
             ],
           ),
-          // bottomNavigationBar: BottomNavyBar(
-          //   selectedIndex: _currentIndex,
-          //   showElevation: true,
-          //   itemCornerRadius: 24,
-          //   curve: Curves.easeIn,
-          //   onItemSelected: (value) {
-          //     onTabTapped(value);
-          //     colorChanger(value);
-          //   },
-          //   items: <BottomNavyBarItem>[
-          //     BottomNavyBarItem(
-          //       icon: Icon(Icons.apps),
-          //       title: Text('Home'),
-          //       activeColor: Colors.red,
-          //       textAlign: TextAlign.center,
-          //     ),
-          //     BottomNavyBarItem(
-          //       icon: Icon(Icons.people),
-          //       title: Text('Users'),
-          //       activeColor: Colors.purpleAccent,
-          //       textAlign: TextAlign.center,
-          //     ),
-          //     // BottomNavyBarItem(
-          //     //   icon: Icon(Icons.message),
-          //     //   title: Text(
-          //     //     'Message ',
-          //     //   ),
-          //     //   activeColor: Colors.pink,
-          //     //   textAlign: TextAlign.center,
-          //     // ),
-          //     BottomNavyBarItem(
-          //       icon: Icon(Icons.settings),
-          //       title: Text('Settings'),
-          //       activeColor: Colors.blue,
-          //       textAlign: TextAlign.center,
-          //     ),
-          //   ],
-          // ),
+
           backgroundColor: _colors[_currentColor],
           body: _children[_currentIndex], // returns a body (Brew List);
         ),
@@ -193,7 +151,13 @@ class First extends StatelessWidget {
 // class Second extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
-//     return Center(child: Text('Second tab', style: TextStyle(fontSize: 20.0)));
+//     return Center(
+//       child: Container(
+//         height: 50,
+//         width: 320,
+//         child: adWidget,
+//       ),
+//     );
 //   }
 // }
 
