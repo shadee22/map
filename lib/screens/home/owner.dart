@@ -16,7 +16,8 @@ class _OwnerState extends State<Owner> {
     super.initState();
     myBanner = BannerAd(
       // adUnitId: 'ca-app-pub-6506859987853518/8844554031',
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111', //test Add
+      adUnitId: 'ca-app-pub-6506859987853518/8159185997', // firstAdd
+      // adUnitId: 'ca-app-pub-3940256099942544/6300978111', //test Add
       size: AdSize.banner,
       request: AdRequest(),
       listener: BannerAdListener(

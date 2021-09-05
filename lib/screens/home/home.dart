@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:meowing/screens/home/messager.dart';
 import 'package:meowing/screens/home/setting_form.dart';
 import 'package:meowing/services/auth.dart';
 import 'package:meowing/services/database.dart';
@@ -27,14 +28,19 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   int _currentColor = 0;
 
-  final List<Widget> _children = [BrewList(), Third(), Owner(), Fourth()];
-  final List<Color> _colors = [firstbackcolor];
+  final List<Widget> _children = [BrewList(), Messager(), Owner()];
+  final List<Color> _colors = [yellowBack, messagerBgColor, onwerBgColor];
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
   }
 
+  void colorChanger(int index) {
+    setState(() {
+      _currentColor = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +63,11 @@ class _HomeState extends State<Home> {
       child: MaterialApp(
         home: Scaffold(
           appBar: AppBar(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(20),
+              ),
+            ),
             title: Text(
               'HappyTone',
               style: GoogleFonts.teko(
@@ -68,7 +79,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             backgroundColor: appbarcolor,
-            elevation: 0.0,
+            // elevation: 0.0,
             actions: [
               FlatButton.icon(
                 icon: Icon(
@@ -114,8 +125,9 @@ class _HomeState extends State<Home> {
             currentIndex:
                 _currentIndex, // Use this to update the Bar giving a position
             onTap: (value) {
+              // value = _currentIndex;
               onTabTapped(value);
-
+              colorChanger(value);
             },
             items: [
               TitledNavigationBarItem(
@@ -161,16 +173,16 @@ class First extends StatelessWidget {
 //   }
 // }
 
-class Third extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Third tab', style: TextStyle(fontSize: 20.0)));
-  }
-}
+// class Third extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(child: Text('Third tab', style: TextStyle(fontSize: 20.0)));
+//   }
+// }
 
-class Fourth extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('4 tab', style: TextStyle(fontSize: 20.0)));
-  }
-}
+// class Fourth extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(child: Text('4 tab', style: TextStyle(fontSize: 20.0)));
+//   }
+// }

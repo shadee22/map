@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:meowing/services/auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:meowing/shared/constraints.dart';
 import 'package:meowing/shared/loading.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -15,6 +17,13 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final _formkey = GlobalKey<FormState>();
+
+  final String assetName = 'assets/register.svg';
+  final Widget svg = SvgPicture.asset(
+    'assets/register.svg',
+    semanticsLabel: 'Acme Logo',
+    fit: BoxFit.contain,
+  );
 
   @override
   AuthService _auth = AuthService();
@@ -28,21 +37,52 @@ class _RegisterState extends State<Register> {
     return loading
         ? Loader()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
+            backgroundColor: Color.fromRGBO(255, 177, 66, 1.0),
             appBar: AppBar(
-                title: Text('Register Here!'),
-                backgroundColor: Colors.brown[400],
+                centerTitle: true,
+                toolbarHeight: 60,
+                title: Text(
+                  'HappyTone',
+                  style: GoogleFonts.teko(
+                    textStyle: TextStyle(
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(30),
+                  ),
+                ),
+                backgroundColor: appbarcolor,
+                // elevation: 0.0,
                 actions: [
-                  FlatButton.icon(
-                    icon: Icon(Icons.person),
-                    label: Text('Sign In'),
-                    onPressed: () {
-                      widget.toggleView();
-                    },
+                  Container(
+                    margin: EdgeInsets.all(7.0),
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(
+                          color: Color.fromRGBO(249, 202, 36, 1.0),
+                        ),
+                      ),
+                      onPressed: () => widget.toggleView(),
+                      padding: EdgeInsets.all(10.0),
+                      color: Color.fromRGBO(240, 147, 43, 1.0),
+                      textColor: Colors.white,
+                      child: Row(
+                        children: [
+                          Icon(Icons.settings),
+                          Text("Sign In", style: TextStyle(fontSize: 15)),
+                        ],
+                      ),
+                    ),
                   ),
                 ]),
             body: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 50.0),
+              padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 30.0),
               child: Column(
                 children: [
                   Form(
@@ -50,12 +90,25 @@ class _RegisterState extends State<Register> {
                     child: Column(
                       children: <Widget>[
                         SizedBox(
-                          height: 50,
+                          width: double.infinity,
+                          child: Text('Register Here!',
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.robotoCondensed(
+                                textStyle: TextStyle(
+                                  fontSize: 45.0,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              )),
+                        ),
+                        SizedBox(
+                          height: 30,
                         ),
                         TextFormField(
                           // Email
                           decoration: textinputdecoration.copyWith(
-                              hintText: 'Email Here'),
+                            hintText: 'Email Here',
+                            prefixIcon: Icon(Icons.email),
+                          ),
                           validator: (val) =>
                               val!.isEmpty ? 'Enter a Email' : null,
                           onChanged: (val) {
@@ -63,12 +116,13 @@ class _RegisterState extends State<Register> {
                           },
                         ),
                         SizedBox(
-                          height: 50,
+                          height: 20,
                         ),
                         TextFormField(
                           // Password
                           decoration: textinputdecoration.copyWith(
-                              hintText: 'Password Here'),
+                              hintText: 'Password Here',
+                              prefixIcon: Icon(Icons.vpn_key)),
                           validator: (val) => val!.length < 6
                               ? 'Add Password more than 6 Chars Long'
                               : null,
@@ -78,9 +132,14 @@ class _RegisterState extends State<Register> {
                           },
                         ),
                         SizedBox(
-                          height: 50,
+                          height: 30,
                         ),
                         RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 70.0, vertical: 15.0),
                           color: Colors.red,
                           onPressed: () async {
                             if (_formkey.currentState!.validate()) {
@@ -95,10 +154,15 @@ class _RegisterState extends State<Register> {
                               }
                             }
                           },
-                          child: Text(
-                            'Register',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                          child: Text('Register',
+                              style: GoogleFonts.raleway(
+                                textStyle: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18.0,
+                                  letterSpacing: 1,
+                                  color: Colors.white,
+                                ),
+                              )),
                         ),
                         SizedBox(
                           height: 20.0,
@@ -107,6 +171,15 @@ class _RegisterState extends State<Register> {
                           _error,
                           style: TextStyle(color: Colors.red, fontSize: 20.0),
                         ),
+                        SizedBox(height: 10),
+                        Text(
+                          _error,
+                          style: TextStyle(color: Colors.red, fontSize: 20.0),
+                        ),
+                        Opacity(
+                            opacity: 0.9,
+                            child:
+                                Container(height: 180, width: 300, child: svg)),
                       ],
                     ),
                   ),
