@@ -30,7 +30,5 @@ class _BrewListState extends State<BrewList> {
     } else {
       return Loader();
     }
-
-    
   }
 }

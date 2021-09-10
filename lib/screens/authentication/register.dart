@@ -1,8 +1,9 @@
-// ignore_for_file: use_key_in_widget_constructors, override_on_non_overriding_member, annotate_overrides, prefer_const_constructors, deprecated_member_use, await_only_futures, avoid_print, prefer_final_fields
+// ignore_for_file: use_key_in_widget_constructors, override_on_non_overriding_member, annotate_overrides, prefer_const_constructors, deprecated_member_use, await_only_futures, avoid_print, prefer_final_fields, sized_box_for_whitespace, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:meowing/services/auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:meowing/services/database.dart';
 import 'package:meowing/shared/constraints.dart';
 import 'package:meowing/shared/loading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -28,6 +29,7 @@ class _RegisterState extends State<Register> {
   @override
   AuthService _auth = AuthService();
 
+  String _name = '';
   String _email = '';
   String _error = '';
   String _password = '';
@@ -47,7 +49,6 @@ class _RegisterState extends State<Register> {
                     textStyle: TextStyle(
                       fontSize: 40.0,
                       fontWeight: FontWeight.w600,
-                      letterSpacing: 1,
                     ),
                   ),
                 ),
@@ -74,7 +75,11 @@ class _RegisterState extends State<Register> {
                       textColor: Colors.white,
                       child: Row(
                         children: [
-                          Icon(Icons.settings),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5.0),
+                            child: Icon(Icons.login),
+                          ),
                           Text("Sign In", style: TextStyle(fontSize: 15)),
                         ],
                       ),
@@ -106,6 +111,19 @@ class _RegisterState extends State<Register> {
                         TextFormField(
                           // Email
                           decoration: textinputdecoration.copyWith(
+                            hintText: 'Your Name',
+                            prefixIcon: Icon(Icons.fingerprint),
+                          ),
+                          validator: (val) =>
+                              val!.isEmpty ? 'Give Us Your Name!' : null,
+                          onChanged: (val) {
+                            setState(() => _name = val);
+                          },
+                        ),
+                        gap,
+                        TextFormField(
+                          // Email
+                          decoration: textinputdecoration.copyWith(
                             hintText: 'Email Here',
                             prefixIcon: Icon(Icons.email),
                           ),
@@ -115,9 +133,7 @@ class _RegisterState extends State<Register> {
                             setState(() => _email = val);
                           },
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                        gap,
                         TextFormField(
                           // Password
                           decoration: textinputdecoration.copyWith(
@@ -131,22 +147,20 @@ class _RegisterState extends State<Register> {
                             setState(() => _password = val);
                           },
                         ),
-                        SizedBox(
-                          height: 30,
-                        ),
+                        gap,
                         RaisedButton(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           padding: EdgeInsets.symmetric(
                               horizontal: 70.0, vertical: 15.0),
-                          color: Colors.red,
+                          color: Colors.green,
                           onPressed: () async {
                             if (_formkey.currentState!.validate()) {
                               setState(() => loading = true);
                               dynamic _result =
                                   await _auth.registerWithEmailAndPassword(
-                                      _email, _password);
+                                      _name, _email, _password);
                               if (_result == null) {
                                 setState(
                                     () => _error = 'Pls Enter a Valid Email ');
@@ -167,15 +181,17 @@ class _RegisterState extends State<Register> {
                         SizedBox(
                           height: 20.0,
                         ),
-                        Text(
-                          _error,
-                          style: TextStyle(color: Colors.red, fontSize: 20.0),
-                        ),
+                        if (_error != '')
+                          Chip(
+                            labelPadding: EdgeInsets.all(10.0),
+                            label: Text(
+                              "$_error !",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 20.0),
+                            ),
+                            backgroundColor: Colors.red,
+                          ),
                         SizedBox(height: 10),
-                        Text(
-                          _error,
-                          style: TextStyle(color: Colors.red, fontSize: 20.0),
-                        ),
                         Opacity(
                             opacity: 0.9,
                             child:

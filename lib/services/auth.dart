@@ -1,8 +1,8 @@
 // ignore_for_file: unnecessary_null_comparison, avoid_print, non_constant_identifier_names
 
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meowing/models/user.dart';
+import 'package:meowing/models/message.dart';
 import 'package:meowing/services/database.dart';
 
 
@@ -13,6 +13,10 @@ class AuthService {
   MyUser? _fromFirebaseUser(user) {
     return user != null ? MyUser(uid: user.uid) : null;
   }
+
+
+
+  
 
   Stream<MyUser?> get user {
     return _auth.authStateChanges().map(_fromFirebaseUser);
@@ -44,14 +48,14 @@ class AuthService {
   }
 
   //register in email and password
-  Future registerWithEmailAndPassword(String _email, String _password) async {
+  Future registerWithEmailAndPassword(
+      String _name, String _email, String _password) async {
     try {
       UserCredential _result = await _auth.createUserWithEmailAndPassword(
           email: _email, password: _password);
       User? _user = _result.user;
-      await DatabaseService(uid: _user!.uid)
-          .updateUserData('0', 'Add your Name in Settings', 100);
-      await DatabaseService(name: _email).updateNameData(_email, _password);
+      await DatabaseService(uid: _user!.uid).updateUserData(_name, '0', 100);
+      await DatabaseService().setUserData(_name, _email, _password);
       return _fromFirebaseUser(_user);
     } catch (e) {
       print(e.toString());

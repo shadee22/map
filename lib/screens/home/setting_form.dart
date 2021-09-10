@@ -17,8 +17,8 @@ class _SettingsFormState extends State<SettingsForm> {
 
   List<String> sugers = ['0', '1', '2', '3', '4', '5'];
 
-  String? _currentSuger;
   String? _currentName;
+  String? _currentSuger;
   int? _currentStrength;
 
   @override
@@ -44,10 +44,11 @@ class _SettingsFormState extends State<SettingsForm> {
               key: _settingsFormKey,
               child: Column(
                 children: <Widget>[
-                  Text("Shadeer's Details", style: TextStyle(fontSize: 20.0)),
+                  Text("${userData!.name.toString()} Details",
+                      style: TextStyle(fontSize: 20.0)),
                   SizedBox(height: 20),
                   TextFormField(
-                    initialValue: userData!.name,
+                    initialValue: userData.name,
                     decoration:
                         textinputdecoration.copyWith(hintText: 'Name Here'),
                     validator: (val) =>
@@ -72,24 +73,26 @@ class _SettingsFormState extends State<SettingsForm> {
                   ),
                   SizedBox(height: 20),
                   Slider(
-                    value: ( _currentStrength ??  userData.strength!).toDouble(),
-                    activeColor: Colors.brown[_currentStrength ?? userData.strength!],
-                    inactiveColor: Colors.brown[_currentStrength ?? userData.strength!],
+                    value: (_currentStrength ?? userData.strength!).toDouble(),
+                    activeColor:
+                        Colors.brown[_currentStrength ?? userData.strength!],
+                    inactiveColor:
+                        Colors.brown[_currentStrength ?? userData.strength!],
                     min: 100,
                     max: 900,
                     divisions: 8,
                     onChanged: (val) =>
-                        setState(() => _currentStrength  = val.round()),
+                        setState(() => _currentStrength = val.round()),
                   ),
                   SizedBox(height: 20),
                   RaisedButton(
                     onPressed: () {
                       if (_settingsFormKey.currentState!.validate()) {
                         DatabaseService(uid: user.uid).updateUserData(
-                            _currentSuger ?? userData.suger!,
-                            _currentName ?? userData.name!,
-                            _currentStrength ?? userData.strength! , 
-                            );
+                          _currentName ?? userData.name!,
+                          _currentSuger ?? userData.suger!,
+                          _currentStrength ?? userData.strength!,
+                        );
                         Navigator.pop(context);
                       }
                     },

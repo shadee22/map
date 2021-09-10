@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:meowing/screens/home/messager.dart';
+import 'package:meowing/screens/home/owner.dart';
 import 'package:meowing/screens/home/setting_form.dart';
 import 'package:meowing/services/auth.dart';
 import 'package:meowing/services/database.dart';
@@ -12,11 +12,10 @@ import 'package:meowing/screens/home/brew_list.dart';
 import 'package:meowing/models/brew.dart';
 import 'package:meowing/models/name.dart';
 import 'package:meowing/models/user.dart';
-import 'package:meowing/screens/home/owner.dart';
+import 'package:meowing/screens/home/messager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:titled_navigation_bar/titled_navigation_bar.dart';
 import 'package:meowing/shared/constraints.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -25,11 +24,15 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
-  int _currentIndex = 0;
-  int _currentColor = 0;
+  int _currentIndex = 1;
+  int _currentColor = 1;
 
   final List<Widget> _children = [BrewList(), Messager(), Owner()];
-  final List<Color> _colors = [yellowBack, messagerBgColor, onwerBgColor];
+  final List<Color> _colors = [
+    brewCrewBgColor,
+    messagerBgColor,
+    onwerBgColor
+  ];
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -65,7 +68,7 @@ class _HomeState extends State<Home> {
           appBar: AppBar(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(20),
+                bottom: Radius.circular(30),
               ),
             ),
             title: Text(
@@ -74,11 +77,11 @@ class _HomeState extends State<Home> {
                 textStyle: TextStyle(
                   fontSize: 35.0,
                   fontWeight: FontWeight.w600,
-                  // letterSpacing: 1,
                 ),
               ),
             ),
             backgroundColor: appbarcolor,
+            // backgroundColor: Color.fromRGBO(179, 63, 64 , 1.0),
             // elevation: 0.0,
             actions: [
               FlatButton.icon(
@@ -96,50 +99,56 @@ class _HomeState extends State<Home> {
                   await _auth.SignOut();
                 },
               ),
-              Container(
-                margin: EdgeInsets.all(7.0),
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(
-                      color: Color.fromRGBO(249, 202, 36, 1.0),
-                    ),
-                  ),
-                  onPressed: () => _showSettingsPanel(),
-                  padding: EdgeInsets.all(10.0),
-                  color: Color.fromRGBO(240, 147, 43, 1.0),
-                  textColor: Colors.white,
-                  child: Row(
-                    children: [
-                      Icon(Icons.settings),
-                      Text("Settings", style: TextStyle(fontSize: 15)),
-                    ],
-                  ),
-                ),
-              ),
+              // Container(
+              //   margin: EdgeInsets.all(7.0),
+              //   child: RaisedButton(
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(18.0),
+              //       side: BorderSide(
+              //         color: Color.fromRGBO(249, 202, 36, 1.0),
+              //       ),
+              //     ),
+              //     onPressed: () => _showSettingsPanel(),
+              //     padding: EdgeInsets.all(10.0),
+              //     color: Color.fromRGBO(240, 147, 43, 1.0),
+              //     textColor: Colors.white,
+              //     child: Row(
+              //       children: [
+              //         Icon(Icons.settings),
+              //         Text("Settings", style: TextStyle(fontSize: 15)),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           bottomNavigationBar: TitledBottomNavigationBar(
+            curve: Curves.bounceOut,
+            height : MediaQuery.of(context).size.height / 12,
             enableShadow: true,
-            activeColor: Color.fromRGBO(250, 152, 58, 1.0),
+            activeColor: Colors.blueGrey,
+            inactiveColor: Colors.white,
+            inactiveStripColor:Color.fromARGB(240, 254, 194, 96) ,
             currentIndex:
                 _currentIndex, // Use this to update the Bar giving a position
             onTap: (value) {
-              // value = _currentIndex;
               onTabTapped(value);
               colorChanger(value);
             },
             items: [
               TitledNavigationBarItem(
-                  title: Text(
+                  backgroundColor: Color.fromARGB(240, 254, 194, 96),
+                  title: Text(  
                     'Brew Crew',
                     style: glory_font,
                   ),
                   icon: Icon(Icons.airline_seat_individual_suite_rounded)),
               TitledNavigationBarItem(
+                  backgroundColor: Color.fromARGB(240, 254, 194, 96),
                   title: Text('Messages', style: glory_font),
                   icon: Icon(Icons.message_rounded)),
               TitledNavigationBarItem(
+                  backgroundColor: Color.fromARGB(240, 254, 194, 96),
                   title: Text('Owner', style: glory_font),
                   icon: Icon(Icons.military_tech)),
             ],

@@ -7,14 +7,12 @@ class Loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color : Colors.greenAccent,
-      child : SpinKitChasingDots(
-        color : Colors.white ,
-        size : 50.0 ,
-      )
-    );
+        color: Colors.orangeAccent,
+        child: SpinKitWave(
+          color: Colors.blueGrey,
+          size: 60.0,
+        ));
   }
 }
 
-
-// add loading :  Loader() before Scaffold  
+// add loading :  Loader() before Scaffold
