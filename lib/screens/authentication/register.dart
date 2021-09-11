@@ -3,10 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:meowing/services/auth.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:meowing/services/database.dart';
+// import 'package:meowing/services/database.dart';
 import 'package:meowing/shared/constraints.dart';
 import 'package:meowing/shared/loading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_fadein/flutter_fadein.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -182,14 +183,17 @@ class _RegisterState extends State<Register> {
                           height: 20.0,
                         ),
                         if (_error != '')
-                          Chip(
-                            labelPadding: EdgeInsets.all(10.0),
-                            label: Text(
-                              "$_error !",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 20.0),
+                          FadeIn(
+                            duration : Duration(milliseconds : 1000),
+                                                      child: Chip(
+                              labelPadding: EdgeInsets.all(10.0),
+                              label: Text(
+                                "$_error !",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20.0),
+                              ),
+                              backgroundColor: Colors.red,
                             ),
-                            backgroundColor: Colors.red,
                           ),
                         SizedBox(height: 10),
                         Opacity(

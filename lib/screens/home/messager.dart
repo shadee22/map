@@ -4,6 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:meowing/models/user.dart';
 import 'package:meowing/services/database.dart';
 import 'package:meowing/shared/loading.dart';
+// import 'package:meowing/shared/constraints.dart';
+import 'package:html/dom.dart' as dom;
+import 'package:html/parser.dart' as parser;
+import 'package:http/http.dart' as http;
+// import 'package:simple_animations/simple_animations.dart';
+
+
 import 'package:provider/provider.dart';
 
 class Messager extends StatefulWidget {
@@ -17,6 +24,48 @@ final chatBgColor = Color.fromRGBO(246, 187, 0, 1);
 class _MessagerState extends State<Messager> {
   @override
   Widget build(BuildContext context) {
+    List<String> title;
+  List<String> image;
+  List<String> link;
+    
+
+//  void _getdataFromWeb() async {
+//     final response = await http.get(
+//         'https://www.bewakoof.com/');
+//     dom.Document document = parser.parse(response.body);
+//     final pictures =
+//         document.getElementsByClassName('chWrprInner');
+//     //document.getElementsByClassName('entry-header blog-entry-header');
+// final description =
+//     //document.getElementsByClassName('entry-content');
+//     document.getElementsByClassName('chWrprInner');
+// final nextPage =
+//     //document.getElementsByClassName('entry-title');
+//     document.getElementsByClassName('chWrprInner');
+
+// image = pictures
+//     .map((element) =>
+//           element.getElementsByTagName("img")[0]
+//           .attributes['src'])
+//       .toList();
+//   title = description
+//       .map((element) => element.getElementsByTagName("p")[0]
+//           .innerHtml)
+//        .toList();
+//   link = nextPage
+//       .map((element) =>
+//           element.getElementsByTagName("a")[0]
+//           .attributes['href'])
+//        .toList();
+//   print(link);
+//   }
+
+
+//   @override
+//   void initState() {
+//     _getdataFromWeb();
+// }
+
     final deviceheight = MediaQuery.of(context).size.height;
 
     return StreamProvider<List<NewUser>?>.value(
@@ -69,7 +118,7 @@ class _MessagerState extends State<Messager> {
           ),
           Container(
             child: Column(
-              children: [
+              children: const <Widget>[
                 Expanded(
                   child: SingleChildScrollView(
                     physics: BouncingScrollPhysics(),
@@ -98,7 +147,6 @@ class Lister extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     if (Provider.of<List<NewUser>?>(context) == null) {
       return Loader();
     } else {
@@ -109,8 +157,7 @@ class Lister extends StatelessWidget {
             Container(
               padding: const EdgeInsets.only(top: 8.0),
               child: GestureDetector(
-                onTap: () {
-                },
+                onTap: () {},
                 child: ListTile(
                   title: Text(i.name.toString(),
                       style: TextStyle(

@@ -47,17 +47,17 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    void _showSettingsPanel() {
-      showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: SettingsForm(),
-          );
-        },
-      );
-    }
+    // void _showSettingsPanel() {
+    //   showModalBottomSheet(
+    //     context: context,
+    //     builder: (context) {
+    //       return Container(
+    //         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+    //         child: SettingsForm(),
+    //       );
+    //     },
+    //   );
+    // }
 
     // final user = Provider.of<MyUser>(context);
     return StreamProvider<List<Brew>?>.value(

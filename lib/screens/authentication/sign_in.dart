@@ -3,10 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:animations/animations.dart';
 import 'package:meowing/services/auth.dart';
 import 'package:meowing/shared/constraints.dart';
 import 'package:meowing/shared/loading.dart';
+// import 'package:simple_animations/simple_animations.dart';
+import 'package:flutter_fadein/flutter_fadein.dart';
+
+// import 'package:animations/animations.dart';
+// import 'package:meowing/screens/authentication/register.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -15,6 +19,8 @@ class SignIn extends StatefulWidget {
   @override
   _SignInState createState() => _SignInState();
 }
+
+enum AniProps { width, height, color }
 
 class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
@@ -92,23 +98,21 @@ class _SignInState extends State<SignIn> {
               child: Column(
                 children: <Widget>[
                   if (_error != '')
-                    Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.redAccent,
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 10.0),
+                    FadeIn(
+                      duration: Duration(milliseconds: 1000),
+                      child: Container(
                         child: Column(
                           children: <Widget>[
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.no_cell, color: white),
-                                Text("$_error ! ",
-                                    style: ralewayfont.copyWith(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600)),
+                                Text(
+                                  "$_error ! ",
+                                  style: ralewayfont.copyWith(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ],
                             ),
                             SizedBox(height: 15),
@@ -154,7 +158,17 @@ class _SignInState extends State<SignIn> {
                               ],
                             ),
                           ],
-                        )),
+                        ),
+                        height: 100,
+                        width: 300,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.redAccent,
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                      ),
+                    ),
                   SizedBox(
                     width: double.infinity,
                     child: Text(
@@ -243,5 +257,17 @@ class _SignInState extends State<SignIn> {
         ),
       );
     }
+  }
+}
+
+class NewList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backwardsCompatibility: true,
+      ),
+      body: Container(height: 100, width: double.infinity, color: Colors.red),
+    );
   }
 }

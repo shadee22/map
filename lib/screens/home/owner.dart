@@ -160,7 +160,7 @@ class OwnerState extends State<Owner> with TickerProviderStateMixin {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [
+                colors: const [
                   Colors.green,
                   Colors.blue,
                 ],
@@ -244,7 +244,7 @@ class OwnerState extends State<Owner> with TickerProviderStateMixin {
               gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
-                colors: <Color>[
+                colors: const <Color>[
                   purple,
                   teal,
                 ],

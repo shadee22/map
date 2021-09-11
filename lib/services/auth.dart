@@ -2,21 +2,17 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meowing/models/user.dart';
-import 'package:meowing/models/message.dart';
+// import 'package:meowing/models/message.dart';
 import 'package:meowing/services/database.dart';
 
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // create user object based on firebased user
+  // create user object based on firebase user
   MyUser? _fromFirebaseUser(user) {
     return user != null ? MyUser(uid: user.uid) : null;
-  }
-
-
-
-  
+  }  
 
   Stream<MyUser?> get user {
     return _auth.authStateChanges().map(_fromFirebaseUser);

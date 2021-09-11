@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:simple_animations/simple_animations.dart';
 
 const textinputdecoration = InputDecoration(
   hintText: 'Email Here',
@@ -53,3 +54,59 @@ var ralewayfont = GoogleFonts.raleway(
 //Snackbar
 // var snack = SnackBar(content: Text('this is the snackcbar'));
 // ScaffoldMessenger.of(context).showSnackBar(snack);
+
+//Animations
+
+Widget animationShower(error) {
+  return PlayAnimation<double?>(
+    tween: Tween(begin: 0.0, end: 100.0),
+    duration: Duration(milliseconds: 1000),
+    builder: (context, child, value) {
+      return Container(
+          color: Colors.blue, // use animated value
+          width: value,
+          height: value,
+          child: child);
+    },
+    child: Text('$error !')
+  );
+}
+
+
+// OpenContainer(
+//                     closedShape: const RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.all(Radius.circular(0)),
+//                     ),
+//                     closedBuilder: (context, closedContainer) {
+//                       return Material(
+//                           child: Center(
+//                               child: Container(
+//                         child: Text("shadeer is theb aste"),
+//                       )));
+//                     },
+//                     openBuilder: (context, closedContainer) {
+//                       return Scaffold(
+//                           floatingActionButton:
+//                               FloatingActionButton.large(onPressed: () {}),
+//                           appBar: AppBar(
+//                             title: Text('shadeer'),
+//                           ),
+//                           body: Center(
+//                               child: Container(
+//                             height: 200,
+//                             width: 200,
+//                             color: teal,
+//                           )));
+//                     },
+//                   ),
+
+
+
+//Navigator 
+
+// Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                             builder: (context) => NewList(),
+//                           ),
+//                         ),
